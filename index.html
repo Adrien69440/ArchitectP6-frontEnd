@@ -7,6 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/e6e1e21d75.js" crossorigin="anonymous"></script>
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	
@@ -18,7 +19,8 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
+			<a href="./login.html" class="loginStyle login"><li>login</li></a>
+			
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -36,8 +38,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="gallery" id="works-container">
+		<h2>Mes Projets
+			<a href="#" class="admin"></a>
+		</h2>
+	
+		<section class="filters">
+		</section>
+		<div class="gallery" id="worksContainer">
 		</div>
 	</section>
 	 <section id="contact">
@@ -54,7 +61,6 @@
 		</form>
 	</section>
 </main>
-
 <footer>
 	<nav>
 		<ul>
@@ -62,6 +68,44 @@
 		</ul>
 	</nav>
 </footer>
+<!-- modal de suppression -->
+<div class="containerModal">
+	<div class="modalProjet">
+		<span><i class="fa-solid fa-xmark"></i></span>
+		<h2 class="modalTitle">Mes projets</h2>
+		<div class="projetModalContent galleryModal"></div>
+		<span class="separatorSpan"></span>
+		<button>Ajouter un projet</button>
+	</div>
+
+<!-- ********************* -->
+<!-- modal d'ajout -->
+	<div class="projetAddModal">
+		<span><i class="fa-solid fa-arrow-left"></i></span>
+		<span><i class="fa-solid fa-xmark"></i></span>
+		<h2 class="modalTitle">Ajout projet</h2>
+		<form action="">
+			<div class="containerFile">
+				<span><i class="fa-regular fa-image"></i></span>
+				<label for="file">+Ajouter photo</label>
+				<input type="file" id="file" name="image">
+				<img src="#" alt="Aperçu de l'image" class="imgInput">
+				<p>
+					jpg.png: 4 mo max
+				</p>
+			</div>
+		
+		<label for="title">Titre</label>
+		<input type="text" id="title" class="styleInputAdd" name="title">
+		<label for="category">Categorie</label>
+		<select name="category" id="category" class="styleInputAdd"></select>
+		<span class="separatorSpanAdd"></span>
+		<button class="button">valider</button>
+	</form>
+	</div>
+</div>
+<!-- *************************************** -->
 <script src="./index.js" defer></script>
 </body>
+
 </html>
