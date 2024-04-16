@@ -1,10 +1,14 @@
 const filters = document.querySelector(".filters");
 const worksContainer = document.getElementById("worksContainer");
 
+// cette fonction récupere les categories sur la route Api works
+
 async function getWorks() {
     const response = await fetch("http://localhost:5678/api/works");
     return await response.json();
 }
+
+// cette fonction affiche les travaux depuis l'Api works
 
 async function affichageWorks(works) {
     try {
@@ -26,11 +30,14 @@ async function affichageWorks(works) {
         console.error("Erreur lors de l'affichage des travaux:", error);
     }
 }
+// cette fonction récupere les categories sur la route Api works
 
 async function getCategory() {
     const responseCategory = await fetch("http://localhost:5678/api/categories");
     return await responseCategory.json();
 }
+// cette fonction affiche les travaux en filtre avec les differentes categories
+
 async function initializePortfolio() {
     try {
         const categories = await getCategory();
@@ -84,7 +91,7 @@ async function initializePortfolio() {
 
 initializePortfolio();
 
-// // Si l'utilisateur et connecté
+ // Si l'utilisateur et connecté
 
 const loged = window.sessionStorage.loged;
 console.log(loged);
@@ -99,10 +106,34 @@ if (loged == "true") {
     const modifierIcon = document.createElement("i");
     modifierIcon.classList.add("fa-regular", "fa-pen-to-square");
     modifierIcon.id = "modifierIcon";
+    
+    // Ajouter du style à l'icône (noir)
+    modifierIcon.style.color = "black";
+    
     const span = document.createElement("span");
+    
+    // Ajouter un fond de couleur crème au span parent
+    span.style.backgroundColor = "#f1f0e7";
+    span.style.padding = "5px"; // Ajouter un espace autour du contenu
+    
     span.appendChild(modifierIcon);
-    span.appendChild(document.createTextNode("Modifier")); // Ajouter le texte "Modifier" après l'icône
+    
+    // Créer un nouveau span pour le texte "Modifier"
+    const textSpan = document.createElement("span");
+    
+    // Appliquer du style au texte "Modifier" (noir)
+    textSpan.style.color = "black";
+    textSpan.style.marginLeft = "5px"; // Ajouter une marge à gauche de 5px
+    
+    // Créer un nœud texte pour le texte "Modifier"
+    const textNode = document.createTextNode("Modifier");
+    
+    textSpan.appendChild(textNode); // Ajouter le nœud texte au span
+    
+    span.appendChild(textSpan); // Ajouter le span contenant le texte au span principal
+    
     admin.appendChild(span);
+    
     logout.textContent = "logout";
     logout.addEventListener("click", () => {
         window.sessionStorage.loged = false;
@@ -114,11 +145,21 @@ async function checkLoggedIn() {
     const loggedIn = window.sessionStorage.getItem("loggedIn");
 
     const logoutLink = document.querySelector("header nav .login");
+    const filterButtons = document.querySelectorAll(".filters"); // Sélectionnez les boutons de filtre
 
     if (loggedIn === "true") {
         logoutLink.textContent = "logout";
+
+        // Masquer les boutons de filtre
+        filterButtons.forEach(button => {
+            button.style.display = "none";
+        });
     } else {
-        adminLink.textContent = ""; // Masquer le lien "Admin" en effaçant son contenu
+        // Si l'utilisateur n'est pas connecté, afficher les boutons de filtre
+        filterButtons.forEach(button => {
+           
+        });
+
         logoutLink.textContent = "login";
     }
 

@@ -52,6 +52,8 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #f1f0e7;
+	;
 }
 header {
 	display: flex;
@@ -234,14 +236,15 @@ footer nav ul {
 }
 .login form label{
 	text-align: start;
-	color: #1D6154;
-	padding: 5px;
-	margin: 10px;
+	color: black;
+	padding: 0px;
+	margin: 0px;
+	font-weight: 700;
 }
 .login form input{
 	border: 0px white solid;
-	padding: 5px;
-	margin: 10px;
+	padding: 0px;
+	margin: 0px;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 	height: 51px;
 	width: 450px;
@@ -251,7 +254,7 @@ footer nav ul {
     outline: none;
 }
 .login form button{
-	padding: 5px;
+	padding: 0px;
 	margin: 10px auto;
 	border: 1px  #1D6154 solid;
 	color: #1D6154;
