@@ -1,7 +1,7 @@
 const filters = document.querySelector(".filters");
 const worksContainer = document.getElementById("worksContainer");
 
-// cette fonction récupere les categories sur la route Api works
+// cette fonction récupere les travaux sur la route Api works
 
 async function getWorks() {
     const response = await fetch("http://localhost:5678/api/works");
@@ -93,8 +93,10 @@ initializePortfolio();
 
  // Si l'utilisateur et connecté
 
+
 const loged = window.sessionStorage.loged;
 console.log(loged);
+const adminMode = document.querySelector("#adminMode");
 const admin = document.querySelector("main #portfolio .admin");
 const logout = document.querySelector("header nav .login");
 const containerModal = document.querySelector(".containerModal");
@@ -102,38 +104,81 @@ const xmark = document.querySelector(".containerModal .fa-xmark");
 const projetModalContent = document.querySelector(".projetModalContent");
 
 if (loged == "true") {
-    admin.textContent = ""; // Supprimer le texte existant pour éviter la duplication
+    // Créer le span parent pour l'icône et le texte "Modifier"
+    const adminSpan = document.createElement("span");
+    adminSpan.classList.add("admin");
+
+    // Créer l'icône "Modifier"
     const modifierIcon = document.createElement("i");
     modifierIcon.classList.add("fa-regular", "fa-pen-to-square");
     modifierIcon.id = "modifierIcon";
-    
-    // Ajouter du style à l'icône (noir)
     modifierIcon.style.color = "black";
-    
-    const span = document.createElement("span");
-    
-    // Ajouter un fond de couleur crème au span parent
-    span.style.backgroundColor = "#f1f0e7";
-    span.style.padding = "5px"; // Ajouter un espace autour du contenu
-    
-    span.appendChild(modifierIcon);
-    
-    // Créer un nouveau span pour le texte "Modifier"
+
+    // Créer un premier span pour l'icône
+    const iconSpan = document.createElement("span");
+    iconSpan.style.backgroundColor = "#FFFEF8";
+    iconSpan.style.padding = "5px";
+    iconSpan.appendChild(modifierIcon);
+
+    // Créer un deuxième span pour le texte "Modifier"
     const textSpan = document.createElement("span");
-    
-    // Appliquer du style au texte "Modifier" (noir)
+    textSpan.textContent = "Modifier";
     textSpan.style.color = "black";
-    textSpan.style.marginLeft = "5px"; // Ajouter une marge à gauche de 5px
+    textSpan.style.marginLeft = "5px";
+
+    // Ajouter les deux span au span parent
+    adminSpan.appendChild(iconSpan);
+    adminSpan.appendChild(textSpan);
+
+    // Ajouter le span parent à son emplacement d'origine
+    admin.appendChild(adminSpan);
+
+    // Créer le span parent pour l'icône et le texte "Mode édition"
+    const adminModeSpan = document.createElement("span");
+    adminModeSpan.classList.add("admin");
+
+    // Créer l'icône "Mode édition"
+    const editIcon = document.createElement("i");
+    editIcon.classList.add("fa-regular", "fa-pen-to-square");
+    editIcon.style.color = "white";
+
+    // Créer un premier span pour l'icône
+    const editIconSpan = document.createElement("span");
+    editIconSpan.style.backgroundColor = "black";
+    editIconSpan.style.padding = "5px";
+    editIconSpan.appendChild(editIcon);
+
+    // Créer un deuxième span pour le texte "Mode édition"
+    const editTextSpan = document.createElement("span");
+    editTextSpan.textContent = "Mode édition";
+    editTextSpan.style.color = "white";
+    editTextSpan.style.marginLeft = "5px";
+
+    // Ajouter les deux span au span parent
+    adminModeSpan.appendChild(editIconSpan);
+    adminModeSpan.appendChild(editTextSpan);
+
+    // Centrer le bouton "Mode édition"
+    adminModeSpan.style.display = "flex";
+    adminModeSpan.style.alignItems = "center";
+    adminModeSpan.style.justifyContent = "center";
+
+    // Modifier la couleur d'arrière-plan et la couleur du texte du span parent du bouton "Mode édition"
+    adminModeSpan.style.backgroundColor = "black";
+    adminModeSpan.style.color = "white";
+    adminModeSpan.style.padding = "10px";
+
+    // Définir la largeur et les marges du bandeau "adminMode"
+    adminMode.style.width = "calc(100% + 18.74rem)";
+    adminMode.style.marginLeft = "-9.37rem";
+    adminMode.style.marginRight = "-9.37rem";
+  
     
-    // Créer un nœud texte pour le texte "Modifier"
-    const textNode = document.createTextNode("Modifier");
     
-    textSpan.appendChild(textNode); // Ajouter le nœud texte au span
-    
-    span.appendChild(textSpan); // Ajouter le span contenant le texte au span principal
-    
-    admin.appendChild(span);
-    
+
+    // Ajouter le span parent au bandeau "adminMode"
+    adminMode.appendChild(adminModeSpan);
+
     logout.textContent = "logout";
     logout.addEventListener("click", () => {
         window.sessionStorage.loged = false;
@@ -238,105 +283,7 @@ function displayAddModal() {
 
 displayAddModal();
 
-// faire la prévisualition de l'image
 
-const prewiewImg = document.querySelector(".containerFile img");
-const inputFile = document.querySelector(".containerFile input");
-const labelFile = document.querySelector(".containerFile label");
-const iconFile = document.querySelector(".containerFile .fa-image");
-const pFile = document.querySelector(".containerFile p");
-
-// ecouter les changements sur input file
-
-inputFile.addEventListener("change", () => {
-    const file = inputFile.files[0];
-    // console.log(file);
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            prewiewImg.src = e.target.result;
-            prewiewImg.style.display = "flex";
-            prewiewImg.style.maxWidth = "100%";
-            prewiewImg.style.maxHeight = "100%";
-            labelFile.style.display = "none";
-            iconFile.style.display = "none";
-            pFile.style.display = "none";
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// Creer une liste de catégorie dans l'input select
-
-async function displayCategoryModale() {
-    const select = document.querySelector(".projetAddModal select");
-    const category = await getCategory();
-
-    category.forEach((category) => {
-        const option = document.createElement("option");
-        option.value = category.id;
-        option.textContent = category.name;
-        select.appendChild(option);
-    });
-}
-
-displayCategoryModale();
-
-const form = document.querySelector(".projetAddModal form");
-const title = document.querySelector("#title");
-const category = document.querySelector("#category");
-const imageFileInput = document.querySelector("#imageFile"); // Ajout de cette référence pour le champ de fichier image
-
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const titleValue = title.value;
-    const categoryValue = category.value;
-    const imageFile = formData.get("image"); // Récupération du fichier image à partir du FormData
-
-    try {
-        const token = window.sessionStorage.getItem("token"); // Récupération du token depuis la session
-        if (!token) {
-            throw new Error("Utilisateur non connecté. Veuillez vous connecter pour ajouter un projet.");
-        }
-
-        // Appel de la fonction pour ajouter un projet
-        const response = await addProject(token, titleValue, categoryValue, imageFile);
-        // console.log('Projet ajouté avec succès:', response);
-
-        // Actualiser la galerie après l'ajout du projet
-        displayGaleryModal();
-    } catch (error) {
-        console.error("Une erreur s'est produite lors de l'ajout du projet :", error);
-    }
-});
-
-const inputTitle = document.querySelector("#title");
-const inputCategory = document.querySelector("#category");
-const inputImage = document.querySelector("#file"); // Modifié pour sélectionner le champ de fichier
-const btnValider = document.querySelector(".button"); // Sélectionnez le bouton "valider"
-
-// Fonction pour vérifier si tous les champs sont remplis
-function checkFields() {
-    const title = inputTitle.value.trim();
-    const category = inputCategory.value.trim();
-    const image = inputImage.files[0]; // Récupérez le fichier image à partir de l'élément input
-
-    // Vérifiez si tous les champs sont remplis
-    if (title && category && image) {
-        btnValider.disabled = false; // Activer le bouton "valider" si tous les champs sont remplis
-        btnValider.classList.add("validated");
-    } else {
-        btnValider.disabled = true; // Désactiver le bouton "valider" si un champ est vide
-        btnValider.classList.remove("validated");
-    }
-}
-
-// Ajoutez un écouteur d'événements sur les champs de l'input pour vérifier leur contenu
-inputTitle.addEventListener("input", checkFields);
-inputCategory.addEventListener("input", checkFields);
-inputImage.addEventListener("change", checkFields);
 
 // **********************************************************
 
@@ -412,3 +359,119 @@ async function addProject(token, title, category, imageFile) {
         throw error;
     }
 }
+
+// faire la prévisualition de l'image
+
+const prewiewImg = document.querySelector(".containerFile img");
+const inputFile = document.querySelector(".containerFile input");
+const labelFile = document.querySelector(".containerFile label");
+const iconFile = document.querySelector(".containerFile .fa-image");
+const pFile = document.querySelector(".containerFile p");
+
+// ecouter les changements sur input file
+
+inputFile.addEventListener("change", () => {
+    const file = inputFile.files[0];
+    // console.log(file);
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            prewiewImg.src = e.target.result;
+            prewiewImg.style.display = "flex";
+            prewiewImg.style.maxWidth = "100%";
+            prewiewImg.style.maxHeight = "100%";
+            labelFile.style.display = "none";
+            iconFile.style.display = "none";
+            pFile.style.display = "none";
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Creer une liste de catégorie dans l'input select
+
+async function displayCategoryModale() {
+    const select = document.querySelector(".projetAddModal select");
+    const category = await getCategory();
+
+    category.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.textContent = category.name;
+        select.appendChild(option);
+    });
+}
+
+displayCategoryModale();
+
+const form = document.querySelector(".projetAddModal form");
+const title = document.querySelector("#title");
+const category = document.querySelector("#category");
+const imageFileInput = document.querySelector("#imageFile"); // Ajout de cette référence pour le champ de fichier image
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const titleValue = title.value;
+    const categoryValue = category.value;
+    const imageFile = formData.get("image"); // Récupération du fichier image à partir du FormData
+
+    try {
+        const token = window.sessionStorage.getItem("token"); // Récupération du token depuis la session
+        if (!token) {
+            throw new Error("Utilisateur non connecté. Veuillez vous connecter pour ajouter un projet.");
+        }
+
+        // // Appel de la fonction pour ajouter un projet
+        const response = await addProject(token, titleValue, categoryValue, imageFile);
+        
+        // Réinitialiser les champs du formulaire après l'ajout du projet
+        inputTitle.value = '';
+        inputCategory.value = '';
+        inputImage.value = ''; // Réinitialiser le champ de fichier
+        btnValider.disabled = true; // Désactiver le bouton de validation
+        btnValider.classList.remove("validated"); // Retirer la classe "validated" du bouton
+
+        // Réinitialiser l'aperçu de l'image
+        prewiewImg.src = "#";
+        prewiewImg.style.display = "none";
+        labelFile.style.display = "block";
+        iconFile.style.display = "inline-block";
+        pFile.style.display = "block";
+
+        // Actualiser la galerie après l'ajout du projet
+        displayGaleryModal();
+    } catch (error) {
+        console.error("Une erreur s'est produite lors de l'ajout du projet :", error);
+    }
+});
+
+
+const inputTitle = document.querySelector("#title");
+const inputCategory = document.querySelector("#category");
+const inputImage = document.querySelector("#file"); // Modifié pour sélectionner le champ de fichier
+const btnValider = document.querySelector(".myButton"); // Sélectionnez le bouton "valider" correctement
+
+// Fonction pour vérifier si tous les champs sont remplis
+function checkFields() {
+    const title = inputTitle.value.trim();
+    const category = inputCategory.value.trim();
+    const image = inputImage.files[0]; // Récupérez le fichier image à partir de l'élément input
+
+    // Vérifiez si tous les champs sont remplis
+    if (title && category && image) {
+        btnValider.disabled = false; // Activer le bouton "valider" si tous les champs sont remplis
+        btnValider.classList.add("validated");
+    } else {
+        btnValider.disabled = true; // Désactiver le bouton "valider" si un champ est vide
+        btnValider.classList.remove("validated");
+        // Ajouter l'attribut "disabled" au bouton si un champ est vide
+        btnValider.setAttribute("disabled", "");
+    }
+}
+
+// Ajoutez un écouteur d'événements sur les champs de l'input pour vérifier leur contenu
+inputTitle.addEventListener("input", checkFields);
+inputCategory.addEventListener("input", checkFields);
+inputImage.addEventListener("change", checkFields);

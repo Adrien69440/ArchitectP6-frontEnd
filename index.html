@@ -12,7 +12,11 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	
 </head>
+
 <body>
+	<div class="adminMode" id="adminMode">
+	</div>
+
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -88,7 +92,7 @@
 				<span><i class="fa-regular fa-image"></i></span>
 				<label for="file">+Ajouter photo</label>
 				<input type="file" id="file" name="image">
-				<img src="#" alt="Aperçu de l'image" class="imgInput">
+				<img src="" alt="#" class="imgInput hide">
 				<p>
 					jpg.png: 4 mo max
 				</p>
@@ -99,7 +103,8 @@
 		<label for="category">Categorie</label>
 		<select name="category" id="category" class="styleInputAdd"></select>
 		<span class="separatorSpanAdd"></span>
-		<button class="button">valider</button>
+		<button class="button myButton" id="myButton" disabled>Valider</button>
+	
 	</form>
 	</div>
 </div>
