@@ -293,11 +293,12 @@ footer nav ul {
 	justify-content:center;
 	align-items: center;
 	position: fixed; 
-	max-width: 1140px;
 	width: 100%;
 	height: 100%;
 	background-color:rgb(128, 128, 128, 0.347);
 	top: 0;
+	left: 0;
+
 }
 
 .modalProjet {
@@ -310,7 +311,7 @@ footer nav ul {
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
-
+	
 }
 
 .modalProjet .fa-xmark{
@@ -322,12 +323,13 @@ footer nav ul {
 }
 
 .modalProjet button {
-	background-color: whitesmoke;
+	background-color:#1D6154 ;
 	padding: 5px 10px;
 	border-radius: 25px;
 	border: none;
 	cursor: pointer;
 	transition: background-color 0.35s;
+
 }
 .modalProjet button:hover {
 	color: white;
@@ -337,7 +339,7 @@ footer nav ul {
   
   
 .galleryModal {
-	width: 80%;
+	width: 40%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-column-gap: 20px;
@@ -349,6 +351,7 @@ footer nav ul {
 }
 .galleryModal img {
 	width: 100%;
+	object-fit: cover;
 	
 }
 
@@ -385,7 +388,7 @@ width: 80%;
 	flex-direction: column;
 	align-items: center;
 	height: 60%;
-	width: 60%;
+	width: 50%;
 	background-color: white;
 	border-radius:5px ;
 	position: relative;

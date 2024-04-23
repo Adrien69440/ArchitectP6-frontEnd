@@ -48,7 +48,7 @@ async function initializePortfolio() {
         allButton.id = "TOUS";
         filters.appendChild(allButton);
         allButton.classList.add("active");
-
+        // Création d'un bouton pour chaque catégorie en parcourant le tableau
         categories.forEach((category) => {
             const btn = document.createElement("button");
             btn.textContent = category.name;
@@ -63,6 +63,7 @@ async function initializePortfolio() {
 
         filters.addEventListener("click", async (e) => {
             if (e.target.tagName === "BUTTON") {
+                
                 // Désactiver la classe active du bouton "TOUS" s'il est actif
                 const allButton = document.getElementById("TOUS");
                 if (allButton.classList.contains("active")) {
@@ -91,8 +92,44 @@ async function initializePortfolio() {
 
 initializePortfolio();
 
- // Si l'utilisateur et connecté
 
+
+// ************************************************************************************************************************************************
+ 
+
+// Fonction pour vérifier l'état de connexion de l'utilisateur
+async function checkLoggedIn() {
+    const loggedIn = window.sessionStorage.getItem("loggedIn");
+
+    const logoutLink = document.querySelector("header nav .login");
+    const filterButtons = document.querySelectorAll(".filters"); // Sélectionnez les boutons de filtre
+
+    if (loggedIn === "true") {
+        logoutLink.textContent = "logout";
+
+        // Masquer les boutons de filtre
+        filterButtons.forEach(button => {
+            button.style.display = "none";
+        });
+    } else {
+        // Si l'utilisateur n'est pas connecté, afficher les boutons de filtre
+        filterButtons.forEach(button => {
+           
+        });
+
+        logoutLink.textContent = "login";
+    }
+
+    // Gérer la déconnexion de l'utilisateur
+    logoutLink.addEventListener("click", () => {
+        window.sessionStorage.removeItem("loggedIn");
+    });
+}
+
+// Appel de la fonction pour vérifier l'état de connexion
+checkLoggedIn();
+
+// Si l'utilisateur et connecté
 
 const loged = window.sessionStorage.loged;
 console.log(loged);
@@ -173,9 +210,6 @@ if (loged == "true") {
     adminMode.style.marginLeft = "-9.37rem";
     adminMode.style.marginRight = "-9.37rem";
   
-    
-    
-
     // Ajouter le span parent au bandeau "adminMode"
     adminMode.appendChild(adminModeSpan);
 
@@ -185,37 +219,7 @@ if (loged == "true") {
     });
 }
 
-// Fonction pour vérifier l'état de connexion de l'utilisateur
-async function checkLoggedIn() {
-    const loggedIn = window.sessionStorage.getItem("loggedIn");
 
-    const logoutLink = document.querySelector("header nav .login");
-    const filterButtons = document.querySelectorAll(".filters"); // Sélectionnez les boutons de filtre
-
-    if (loggedIn === "true") {
-        logoutLink.textContent = "logout";
-
-        // Masquer les boutons de filtre
-        filterButtons.forEach(button => {
-            button.style.display = "none";
-        });
-    } else {
-        // Si l'utilisateur n'est pas connecté, afficher les boutons de filtre
-        filterButtons.forEach(button => {
-           
-        });
-
-        logoutLink.textContent = "login";
-    }
-
-    // Gérer la déconnexion de l'utilisateur
-    logoutLink.addEventListener("click", () => {
-        window.sessionStorage.removeItem("loggedIn");
-    });
-}
-
-// Appel de la fonction pour vérifier l'état de connexion
-checkLoggedIn();
 
 // affichage de la modale au clic
 
